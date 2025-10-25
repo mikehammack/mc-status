@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Minecraft Status</title>
+  <style>
+    body { margin:0; background:#111; color:#fff; font-family:sans-serif; font-size:14px; text-align:center; }
+    #count { font-weight:bold; color:#FFD600; }
+    .label { font-size:12px; color:#aaa; }
+  </style>
+</head>
+<body>
+  <div class="label">Players Online</div>
+  <div id="count">?</div>
+  <script>
+    async function fetchStatus() {
+      try {
+        const res = await fetch("https://api.mcsrvstat.us/2/172.125.126.129");
+        const data = await res.json();
+        document.getElementById("count").textContent =
+          data.players.online + "/" + data.players.max;
+      } catch {
+        document.getElementById("count").textContent = "Error";
+      }
+    }
+    fetchStatus();
+    setInterval(fetchStatus, 20000);
+  </script>
+</body>
+</html>
